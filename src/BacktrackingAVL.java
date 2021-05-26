@@ -71,7 +71,9 @@ public class BacktrackingAVL extends AVLTree {
                 else
                     unBal.parent.left = rightRotate(unBal);
             }
+
         }
+
         Node forDeletion=nodesInserted.pop();
         //after deleting the node we need to update the heights so we will hold the parent
         if (forDeletion.parent==null)//its the root and the only node in the tree
@@ -87,11 +89,15 @@ public class BacktrackingAVL extends AVLTree {
 
         }
         Node per=forDeletion.parent;
-        while(per!=null)
-        {
-            per.height = Math.max(getNodeHeight(per.left), getNodeHeight(per.right)) + 1;
+        boolean changed=true;
+        while (per != null && changed ) {
+            int newHeight=Math.max(getNodeHeight(per.left), getNodeHeight(per.right)) + 1;
+            if(newHeight!=per.height)
+                per.height = newHeight;
+            else
+                changed=false;
             per=per.parent;
-        }
+            }
     } 
     
     //Change the list returned to a list of integers answering the requirements
