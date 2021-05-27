@@ -27,11 +27,12 @@ public class AVLTree implements Iterable<Integer> {
     //You may add lines of code to both "insert" and "insertNode" functions.
 	public void insert(int value) {
     	root = insertNode(this.root,value);
-    	if (!wasRotated) {
+    	if (!wasRotated) //if no rotations were made, we push the string "null" to the rotations ArrayDeque
+    	{
             rotations.push("null");
 
         }
-        wasRotated=false;
+        wasRotated=false;//returning the var to its default value before each insertion(false)
     }
 	
 	protected Node insertNode(Node node, int value) {
@@ -64,16 +65,16 @@ public class AVLTree implements Iterable<Integer> {
         
         // Left Cases            
         if (balance > 1) {
-            wasRotated=true;
+            wasRotated=true;//indicates that rotations have been made
 
             if (value > node.left.value) {
                 node.left = leftRotate(node.left);
-                rotations.push(ImbalanceCases.LEFT_RIGHT.toString());
+                rotations.push(ImbalanceCases.LEFT_RIGHT.toString());//indicates the case for the insertion
             }
             else {
-                rotations.push(ImbalanceCases.LEFT_LEFT.toString());
+                rotations.push(ImbalanceCases.LEFT_LEFT.toString());//indicates the case for the insertion
             }
-            nodesInserted.push(node.left);
+            nodesInserted.push(node.left);//the node that the rotations were made on
             node = rightRotate(node);
         } // Right Cases
         else if (balance < -1) {
@@ -81,12 +82,12 @@ public class AVLTree implements Iterable<Integer> {
 
             if (value < node.right.value) {
                 node.right = rightRotate(node.right);
-                rotations.push(ImbalanceCases.RIGHT_LEFT.toString());
+                rotations.push(ImbalanceCases.RIGHT_LEFT.toString());//indicates the case for the insertion
             }
             else {
-                rotations.push(ImbalanceCases.RIGHT_RIGHT.toString());
+                rotations.push(ImbalanceCases.RIGHT_RIGHT.toString());//indicates the case for the insertion
             }
-            nodesInserted.push(node.right);
+            nodesInserted.push(node.right);//the node that the rotations were made on
             node = leftRotate(node);
 
         }
